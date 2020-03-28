@@ -1,6 +1,6 @@
 #Driver Program to run on Raspberry Pi Bootup
 #Written by Alastair Lewis
-from Producer import Producer
+from producer import Producer
 from RecordMaker import RecordMaker
 
 #Stub method to simulate badge scans
@@ -27,4 +27,3 @@ while True:
         record = r.createRecord(facilityCode, badgeNumb)
         p.sendRecord(record)
         print(record + " Sent")
-

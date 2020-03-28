@@ -35,12 +35,12 @@ class Consumer:
             print("Recieved message: " + message)
 
             #Send to Database
-            self.database.writeRecord(message)
+            Database.writeRecord(message)
 
             #Write to file
             with open(self.path, 'a') as f:
                 f.write(message + "\n")
-                
+
             print("Message saved")
             message = ""
 

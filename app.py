@@ -262,3 +262,11 @@ def makeDatabase():
         cur.execute("CREATE TABLE people (PersonID int)")
         mysql.connection.commit()
         cur.close()
+
+def writeUsageRecord(machine, time, userID):
+    print("Hello I have written a usage record here")
+    with app.app_context():
+        cur = mysql.connection.cursor()
+        cur.execute("INSERT INTO entries (machine,timeUsed, userID, inUse) VALUES (%s, %s, %s, %s);", (str(machine), str(time), str(userID), str(1)))
+        mysql.connection.commit()
+        cur.close()

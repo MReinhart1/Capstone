@@ -11,8 +11,9 @@ CREATE TABLE users(
   PRIMARY KEY (userID)
 );
 
+
 CREATE TABLE entries(
-  machine varchar(10),
+  machine varchar(50),
   timeUsed datetime,
   userID int,
   inUse boolean
