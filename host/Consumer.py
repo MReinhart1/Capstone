@@ -40,11 +40,11 @@ class Consumer:
             #Write to file
             with open(self.path, 'a') as f:
                 f.write(message + "\n")
-                
+
             print("Message saved")
             message = ""
 
 #Needs to be an Absolute Path to get proper saving functionality
-d = Database("C:/Users/Alastair/Desktop/CISC 498/Capstone/test.txt")
-c = Consumer("C:/Users/Alastair/Desktop/CISC 498/Capstone/test.txt", 6969, d)
+d = Database("C:/Users/mackenziefurlong/Documents/CISC 498/Capstone/test.txt")
+c = Consumer("C:/Users/mackenziefurlong/Documents/CISC 498/Capstone/test.txt", 6969, d)
 c.consume()

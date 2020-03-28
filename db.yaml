@@ -1,5 +1,5 @@
 
-mysql_host: 'localhost'
+mysql_host: 'localhost:8080'
 mysql_user: 'root'
 mysql_password: ''
 mysql_db: 'flaskapp'

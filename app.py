@@ -262,3 +262,5 @@ def makeDatabase():
         cur.execute("CREATE TABLE people (PersonID int)")
         mysql.connection.commit()
         cur.close()
+def insertUsageRecord():
+    print("it worked")
