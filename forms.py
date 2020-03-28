@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, BooleanField, SelectField, FormField
 from wtforms.validators import DataRequired, Length, Email, EqualTo
-
+from flask_mysqldb import MySQL
 
 class userTime(FlaskForm):
     userName = StringField('username', validators=[DataRequired(), Length(min=2,max=20)])
