@@ -312,6 +312,13 @@ def writeUsageRecord(machine, time, userID):
         mysql.connection.commit()
         cur.close()
 
+def writeUsageRecord(machine, time, userID):
+    with app.app_context():
+        cur = mysql.connection.cursor()
+        cur.execute("INSERT INTO entries (machine,timeUsed, userID, inUse) VALUES (%s, %s, %s, %s);", (machine, time, userID, str(1)))
+        mysql.connection.commit()
+        cur.close()
+
 def machineStatus(machine):
     print("Updating machine status...")
     with app.app_context():

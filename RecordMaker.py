@@ -16,7 +16,7 @@ class RecordMaker:
     def createRecord(self, facilityCode, badgeNumber):
         #Creating the JSON structure using a dictionary
         record = {}
-        record["machine"] = "98:01:a7:8f:00:99"
+        record["machine"] = '98:01:a7:8f:00:99'
         record["time"] = str(datetime.now())
         record["userID"] = str(facilityCode) + "-" + str(badgeNumber)
         #Function creates a JSON record and returns it as a string
