@@ -10,19 +10,14 @@ class RecordMaker:
 
     def __init__(self):
         #Gets the MAC Address of the Scanner
-        self.machineID = (':'.join(re.findall('..', '%012x' % uuid.getnode()))) 
-    
+        self.machineID = (':'.join(re.findall('..', '%012x' % uuid.getnode())))
+
     #Returns JSON of the form: {machine varchar(10), time dateTime, userID int};
     def createRecord(self, facilityCode, badgeNumber):
         #Creating the JSON structure using a dictionary
         record = {}
-        record["machine"] = self.machineID
+        record["machine"] = '98:01:a7:8f:00:99'
         record["time"] = str(datetime.now())
         record["userID"] = str(facilityCode) + "-" + str(badgeNumber)
         #Function creates a JSON record and returns it as a string
         return json.dumps(record)
-
-    
-
-
-
