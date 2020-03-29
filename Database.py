@@ -14,3 +14,4 @@ class Database:
         time = record["time"]
         userID = record["userID"]
         app.writeUsageRecord(machine, time, userID)
+        app.machineStatus(machine)
