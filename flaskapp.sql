@@ -19,6 +19,10 @@ CREATE TABLE entries(
   inUse boolean
 );
 
+CREATE TABLE machines(
+  machine varchar(50),
+  inUse boolean
+);
 
 CREATE TABLE machine1 (
   userID int);
@@ -74,7 +78,13 @@ CREATE TABLE rateType (
   PRIMARY KEY (rateID)
 );
 
-
+INSERT INTO machines(machine, inUse) VALUES('98:01:a7:8f:00:99', '0');
+INSERT INTO machines(machine, inUse) VALUES('00:00:00:00:00:02', '0');
+INSERT INTO machines(machine, inUse) VALUES('00:00:00:00:00:03', '0');
+INSERT INTO machines(machine, inUse) VALUES('00:00:00:00:00:04', '0');
+INSERT INTO machines(machine, inUse) VALUES('00:00:00:00:00:05', '0');
+INSERT INTO machines(machine, inUse) VALUES('00:00:00:00:00:06', '0');
+INSERT INTO machines(machine, inUse) VALUES('00:00:00:00:00:07', '0');
 
 INSERT INTO `users` (`username`, `supervisor`, `department`, `faculty`, `institution`, `rateType`, `Permissions`) VALUES ('michael', 'bob', 'computer science', 'cs', 'queens', '33', '1010101');
 
