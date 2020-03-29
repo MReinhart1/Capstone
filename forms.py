@@ -2,17 +2,18 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, BooleanField, SelectField, FormField
 from wtforms.validators import DataRequired, Length, Email, EqualTo
 from flask_mysqldb import MySQL
+import yaml, app
 
 class userTime(FlaskForm):
-    userName = StringField('username', validators=[DataRequired(), Length(min=2,max=20)])
+    userName = StringField('Username', validators=[DataRequired(), Length(min=2,max=20)])
     submit = SubmitField("Submit")
 
 
 class makeNewUser(FlaskForm):
-    userName = StringField('Username', validators=[DataRequired(), Length(min=2,max=20)])
+    userName = StringField('username', validators=[DataRequired(), Length(min=2,max=20)])
     supervisor = SelectField(
         'Supervisor',
-        choices=[('SUPER1','SUPER1'), ('SUPER2', 'SUPER2'), ('SUPER3', 'SUPER3')]
+        choices=[('Queens University','Queens University')]
     )
     department = SelectField(
         'Department',

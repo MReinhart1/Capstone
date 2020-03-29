@@ -5,7 +5,13 @@
 
 <div class="container content-section">
   <table class="table">
-    <thead><h3>Supervisors</h3></thead>
+    <thead>
+      <h3>Supervisors</h3>
+    </thead>
+    <button type="button" class="float-right btn btn-success" data-toggle="modal" data-target="#SuperModel">
+      Add to table
+    </button>
+  <br><br>
     {% for supers in supers %}
     <tr>
       <td> {{supers[1]}} </td>
@@ -13,9 +19,7 @@
     </tr>
     {% endfor %}
   </table>
-  <button type="button" class="float-right btn btn-success" data-toggle="modal" data-target="#SuperModel">
-  Add to table
-</button>
+
 </div>
 
 <div class="modal fade" id="SuperModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -49,6 +53,9 @@
 <div class="container content-section">
   <table class="table">
     <thead><h3>Department</h3></thead>
+    <button type="button" class="float-right btn btn-success" data-toggle="modal" data-target="#DeptModel">
+    Add to table
+  </button><br><br>
     {% for dept in dept %}
     <tr>
       <td> {{dept[1]}} </td>
@@ -56,9 +63,7 @@
     </tr>
     {% endfor %}
   </table>
-  <button type="button" class="float-right btn btn-success" data-toggle="modal" data-target="#DeptModel">
-  Add to table
-</button>
+
 </div>
 
 <div class="modal fade" id="DeptModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -92,6 +97,10 @@
 <div class="container content-section">
   <table class="table">
     <thead><h3>Faculty</h3></thead>
+    <button type="button" class="float-right btn btn-success" data-toggle="modal" data-target="#FacultyModel">
+    Add to table
+  </button>
+  <br><br>
     {% for faculty in faculty %}
     <tr>
       <td> {{faculty[1]}} </td>
@@ -99,9 +108,7 @@
     </tr>
     {% endfor %}
   </table>
-  <button type="button" class="float-right btn btn-success" data-toggle="modal" data-target="#FacultyModel">
-  Add to table
-</button>
+
 </div>
 
 <div class="modal fade" id="FacultyModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -134,6 +141,10 @@
 <div class="container content-section">
   <table class="table">
     <thead><h3>Institution</h3></thead>
+    <button type="button" class="float-right btn btn-success" data-toggle="modal" data-target="#InstitutionModel">
+    Add to table
+  </button>
+  <br><br>
     {% for institution in institution %}
     <tr>
       <td> {{institution[1]}} </td>
@@ -141,9 +152,7 @@
     </tr>
     {% endfor %}
   </table>
-  <button type="button" class="float-right btn btn-success" data-toggle="modal" data-target="#InstitutionModel">
-  Add to table
-</button>
+
 </div>
 
 <div class="modal fade" id="InstitutionModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -178,6 +187,10 @@
 <div class="container content-section">
   <table class="table">
     <thead><h3>Rate Type</h3></thead>
+    <button type="button" class="float-right btn btn-success" data-toggle="modal" data-target="#rateModel">
+    Add to table
+  </button>
+  <br><br>
     {% for rate in rate %}
     <tr>
       <td> {{rate[1]}} </td>
@@ -186,9 +199,6 @@
     </tr>
     {% endfor %}
   </table>
-  <button type="button" class="float-right btn btn-success" data-toggle="modal" data-target="#rateModel">
-  Add to table
-</button>
 </div>
 
 <div class="modal fade" id="rateModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

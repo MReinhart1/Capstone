@@ -15,7 +15,7 @@ CREATE TABLE users(
 CREATE TABLE entries(
   machine varchar(50),
   timeUsed datetime,
-  userID int,
+  userID varchar(50),
   inUse boolean
 );
 

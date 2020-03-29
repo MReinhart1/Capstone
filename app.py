@@ -1,9 +1,9 @@
 from flask import Flask, render_template, url_for, flash, redirect, request
 from forms import *
 from flask_mysqldb import MySQL
-import yaml
+import yaml, json
 import csv, os
-
+from flask_wtf import FlaskForm
 
 app = Flask(__name__)
 
@@ -14,13 +14,12 @@ app.config['MYSQL_USER'] = db['mysql_user']
 app.config['MYSQL_PASSWORD'] = db['mysql_password']
 app.config['MYSQL_DB'] = db['mysql_db']
 app.config['SECRET_KEY'] = os.urandom(24)
-
+mysql = MySQL(app)
 
 #All routing
-mysql = MySQL(app)
 @app.route('/')
 def index():
-    return render_template("/home.html")
+    return render_template("/home.html", hello= helolo)
 
 @app.route('/home.html', methods=['GET', 'POST',  'PUT'])
 def home():
@@ -36,12 +35,23 @@ def timeFunction():
 @app.route('/addUser.html', methods=['GET', 'POST',  'PUT'])
 def userFunction():
     form = makeNewUser()
-    if form.validate_on_submit():
-        cur = mysql.connection.cursor()
-        if (form.rateType.data == "Academic"):
-            rate = 33
-        else:
-            rate = 22
+    cur = mysql.connection.cursor()
+    supers = cur.execute("SELECT superName, superName FROM supervisors")
+    supers = cur.fetchall()
+    dept = cur.execute("SELECT deptName, deptName FROM departments")
+    dept = cur.fetchall()
+    faculty = cur.execute("SELECT facultyName, facultyName FROM faculty")
+    faculty = cur.fetchall()
+    institution = cur.execute("SELECT institutionName, institutionName FROM institution")
+    institution = cur.fetchall()
+    rate = cur.execute("SELECT rateAmount, rateName FROM rateType")
+    rate = cur.fetchall()
+    form.supervisor.choices = supers
+    form.department.choices = dept
+    form.faculty.choices = faculty
+    form.institution.choices = institution
+    form.rateType.choices = rate
+    if request.method=="POST":
         permissionString = ""
         if(form.perMac1.data == True):
             permissionString += "1"
@@ -77,30 +87,17 @@ def userFunction():
             permissionString += "1"
         else:
             permissionString += "0"
-        cur.execute("INSERT INTO users(username, supervisor, department, faculty, institution, rateType, Permissions) VALUES(%s, %s, %s, %s, %s, %s, %s)",([form.userName.data, form.supervisor.data, form.department.data, form.faculty.data, form.institution.data,rate, permissionString]))
+        cur = mysql.connection.cursor()
+        cur.execute("INSERT INTO users(username, supervisor, department, faculty, institution, rateType, Permissions) VALUES(%s, %s, %s, %s, %s, %s, %s)",([form.userName.data, form.supervisor.data, form.department.data, form.faculty.data, form.institution.data,form.rateType.data, permissionString]))
         mysql.connection.commit()
         cur.close()
-        cur = mysql.connection.cursor()
-        resultValue = cur.execute("SELECT * FROM users")
-        if resultValue > 0:
-            userDetails = cur.fetchall()
-        return render_template('addUser.html',
-        form=form ,
-        data=form.userName.data,
-        mac1=form.perMac1.data,
-        mac2=form.perMac2.data,
-        mac3=form.perMac3.data,
-        mac4=form.perMac4.data,
-        mac5=form.perMac5.data,
-        mac6=form.perMac6.data,
-        mac7=form.perMac7.data,
-        userDetails=userDetails)
+        return redirect('addUser.html')
     cur = mysql.connection.cursor()
     resultValue = cur.execute("SELECT * FROM users")
-    if resultValue > 0:
-        userDetails = cur.fetchall()
-        return render_template('addUser.html', form=form , data="", userDetails=userDetails)
-    return render_template('addUser.html', form=form , data="")
+    userDetails = cur.fetchall()
+    return render_template('addUser.html', form=form, userDetails=userDetails)
+
+
 
 @app.route('/configure.html', methods=['GET', 'POST',  'PUT'])
 def configure():
@@ -161,8 +158,6 @@ def configure():
             return redirect("/configure.html")
         except:
             pass
-
-
     cur = mysql.connection.cursor()
     supers = cur.execute("SELECT * FROM supervisors")
     supers = cur.fetchall()
@@ -174,6 +169,9 @@ def configure():
     institution = cur.fetchall()
     rate = cur.execute("SELECT * FROM rateType")
     rate = cur.fetchall()
+    print("^^^^^^^^^^^^^^^")
+    print(supers)
+    print("^^^^^^^^^^^^^^^")
     return render_template("/configure.html",
     supers=supers,
     dept=dept,faculty=faculty,institution=institution,rate=rate,
@@ -251,17 +249,12 @@ def deleteRate(rateIdentificationNumber):
     return redirect("/configure.html")
 
 
+
 def writeCSV(tableList):
     writer = csv.writer(open("out.csv", 'w'))
     for line in tableList:
         writer.writerow(line)
 
-def makeDatabase():
-    with app.app_context():
-        cur = mysql.connection.cursor()
-        cur.execute("CREATE TABLE people (PersonID int)")
-        mysql.connection.commit()
-        cur.close()
 
 def writeUsageRecord(machine, time, userID):
     print("Hello I have written a usage record here")
