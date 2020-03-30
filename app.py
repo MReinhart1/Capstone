@@ -3,6 +3,7 @@ from forms import *
 from flask_mysqldb import MySQL
 import yaml, json
 import csv, os
+import datetime
 from flask_wtf import FlaskForm
 
 app = Flask(__name__)
@@ -19,31 +20,7 @@ mysql = MySQL(app)
 #All routing
 @app.route('/')
 def index():
-    cur = mysql.connection.cursor()
-    cur.execute("SELECT inUse FROM machines WHERE machine = '98:01:a7:8f:00:99'")
-    status = cur.fetchone()
-    status1 = status[0]
-    cur.execute("SELECT inUse FROM machines WHERE machine = '00:00:00:00:00:02'")
-    status = cur.fetchone()
-    status2 = status[0]
-    cur.execute("SELECT inUse FROM machines WHERE machine = '00:00:00:00:00:03'")
-    status = cur.fetchone()
-    status3 = status[0]
-    cur.execute("SELECT inUse FROM machines WHERE machine = '00:00:00:00:00:04'")
-    status = cur.fetchone()
-    status4 = status[0]
-    cur.execute("SELECT inUse FROM machines WHERE machine = '00:00:00:00:00:05'")
-    status = cur.fetchone()
-    status5 = status[0]
-    cur.execute("SELECT inUse FROM machines WHERE machine = '00:00:00:00:00:06'")
-    status = cur.fetchone()
-    status6 = status[0]
-    cur.execute("SELECT inUse FROM machines WHERE machine = '00:00:00:00:00:07'")
-    status = cur.fetchone()
-    status7 = status[0]
-    mysql.connection.commit()
-    cur.close()
-    return render_template("/home.html", machine1=status1, machine2=status2, machine3=status3, machine4=status4, machine5=status5, machine6=status6, machine7=status7)
+    return home()
 
 @app.route('/home.html', methods=['GET', 'POST',  'PUT'])
 def home():
@@ -77,9 +54,79 @@ def home():
 
 @app.route('/time.html', methods=['GET', 'POST',  'PUT'])
 def timeFunction():
-    form = userTime()
-    return render_template('time.html')
+    # form = userTime()
+    default_name = ''
+    name = request.args.get('userName', default_name)
+    default_date = ''
+    date = request.args.get('date', default_date)
+    default_machine = ''
+    machine = request.args.get('machineNumber', default_machine)
+    return timeHelper(name, date, machine)
 
+def timeHelper(name, date, machine):
+    value1 = 1
+    value2 = 2
+    value3 = 3
+    value4 = 4
+    value5 = 5
+    value6 = 6
+    value7 = 7
+    units = "Number of Hours of Machine Use"
+    if name != '':
+        currentDate = datetime.date.today()
+        yesterday = currentDate - datetime.timedelta(days=1)
+        twoDays = currentDate - datetime.timedelta(days=2)
+        threeDays = currentDate - datetime.timedelta(days=3)
+        fourDays = currentDate - datetime.timedelta(days=4)
+        fiveDays = currentDate - datetime.timedelta(days=5)
+        sixDays = currentDate - datetime.timedelta(days=6)
+        label1 = sixDays.strftime("%A") + " " + str(sixDays.day)
+        label2 = fiveDays.strftime("%A") + " " + str(fiveDays.day)
+        label3 = fourDays.strftime("%A") + " " + str(fourDays.day)
+        label4 = threeDays.strftime("%A") + " " + str(threeDays.day)
+        label5 = twoDays.strftime("%A") + " " + str(twoDays.day)
+        label6 = yesterday.strftime("%A") + " " + str(yesterday.day)
+        label7 = currentDate.strftime("%A") + " " + str(currentDate.day)
+    elif date != '':
+        label1 = "Machine 1"
+        label2 = "Machine 2"
+        label3 = "Machine 3"
+        label4 = "Machine 4"
+        label5 = "Machine 5"
+        label6 = "Machine 6"
+        label7 = "Machine 7"
+    elif machine != '':
+        currentDate = datetime.date.today()
+        yesterday = currentDate - datetime.timedelta(days=1)
+        twoDays = currentDate - datetime.timedelta(days=2)
+        threeDays = currentDate - datetime.timedelta(days=3)
+        fourDays = currentDate - datetime.timedelta(days=4)
+        fiveDays = currentDate - datetime.timedelta(days=5)
+        sixDays = currentDate - datetime.timedelta(days=6)
+        label1 = sixDays.strftime("%A") + " " + str(sixDays.day)
+        label2 = fiveDays.strftime("%A") + " " + str(fiveDays.day)
+        label3 = fourDays.strftime("%A") + " " + str(fourDays.day)
+        label4 = threeDays.strftime("%A") + " " + str(threeDays.day)
+        label5 = twoDays.strftime("%A") + " " + str(twoDays.day)
+        label6 = yesterday.strftime("%A") + " " + str(yesterday.day)
+        label7 = currentDate.strftime("%A") + " " + str(currentDate.day)
+    else:
+        currentDate = datetime.date.today()
+        yesterday = currentDate - datetime.timedelta(days=1)
+        twoDays = currentDate - datetime.timedelta(days=2)
+        threeDays = currentDate - datetime.timedelta(days=3)
+        fourDays = currentDate - datetime.timedelta(days=4)
+        fiveDays = currentDate - datetime.timedelta(days=5)
+        sixDays = currentDate - datetime.timedelta(days=6)
+        label1 = sixDays.strftime("%A") + " " + str(sixDays.day)
+        label2 = fiveDays.strftime("%A") + " " + str(fiveDays.day)
+        label3 = fourDays.strftime("%A") + " " + str(fourDays.day)
+        label4 = threeDays.strftime("%A") + " " + str(threeDays.day)
+        label5 = twoDays.strftime("%A") + " " + str(twoDays.day)
+        label6 = yesterday.strftime("%A") + " " + str(yesterday.day)
+        label7 = currentDate.strftime("%A") + " " + str(currentDate.day)
+
+    return render_template('time.html', units=units, label1=label1, label2=label2, label3=label3, label4=label4, label5=label5, label6=label6, label7=label7, value1=value1, value2=value2, value3=value3, value4=value4, value5=value5, value6=value6, value7=value7)
 
 @app.route('/addUser.html', methods=['GET', 'POST',  'PUT'])
 def userFunction():
@@ -236,7 +283,7 @@ def dataEditFunction():
 
 @app.route('/reports.html', methods=['GET', 'POST',  'PUT'])
 def reportFunction():
-    makeDatabase()
+    print("test")
     return render_template('reports.html')
 
 

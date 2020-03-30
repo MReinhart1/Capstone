@@ -7,20 +7,21 @@
 <div class="container">
   <div class="row">
     <div class="col">
-
-      <form method="POST" action="">
+      <p><strong>Filter by...</strong></p>
+      <form method="GET" action="/time.html">
         <div class="form-group">
-          <label for="exampleInputEmail1">User Name</label>
-          <input type="userName" class="form-control" id="userName" placeholder="John Doe">
+          <label for="exampleInputEmail1"><strong>User Name</strong></label>
+          <input type="userName" class="form-control" id="userName" name="userName" placeholder="John Doe">
         </div>
+        <p>or</p>
         <div class="form-group">
           <!-- Date input -->
-          <label class="control-label" for="date">Date</label>
+          <label class="control-label" for="date"><strong>Date</strong></label>
           <input class="form-control" id="date" name="date" placeholder="MM/DD/YYYY" type="text" />
         </div>
-
-        <label for="validationCustom04">Machine</label>
-        <select class="custom-select" id="validationCustom04" required>
+        <p>or</p>
+        <label for="validationCustom04"><strong>Machine</strong></label>
+        <select class="custom-select" id="machineNumber" name="machineNumber">
           <option selected disabled value="">Choose...</option>
           <option avlue="m1">Machine 1</option>
           <option value="m2">Machine 2</option>
@@ -45,10 +46,10 @@
       var myChart = new Chart(ctx, {
           type: 'bar',
           data: {
-              labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+              labels: ['{{ label1 }}', '{{ label2 }}', '{{ label3 }}', '{{ label4 }}', '{{ label5 }}', '{{ label6 }}', '{{ label7 }}'],
               datasets: [{
-                  label: '',
-                  data: [12, 19, 3, 5, 2, 3, 9],
+                  label: '{{ units }}',
+                  data: [{{ value1 }}, {{ value2 }}, {{ value3 }}, {{ value4 }}, {{ value5 }}, {{ value6 }}, {{ value7 }}],
                   backgroundColor: [
                       'rgba(255, 99, 132, 0.2)',
                       'rgba(54, 162, 235, 0.2)',
@@ -56,7 +57,7 @@
                       'rgba(75, 192, 192, 0.2)',
                       'rgba(153, 102, 255, 0.2)',
                       'rgba(255, 159, 64, 0.2)',
-                      'rgba(225, 159, 64, 0.2)'
+                      'rgba(225, 159, 128, 0.2)'
                   ],
                   borderColor: [
                       'rgba(255, 99, 132, 1)',
@@ -65,7 +66,7 @@
                       'rgba(75, 192, 192, 1)',
                       'rgba(153, 102, 255, 1)',
                       'rgba(255, 159, 64, 1)',
-                      'rgba(225, 159, 64, 1)'
+                      'rgba(225, 159, 128, 1)'
                   ],
                   borderWidth: 1
               }]
