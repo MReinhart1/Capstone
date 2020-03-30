@@ -2,8 +2,11 @@ from flask import Flask, render_template, url_for, flash, redirect, request
 from forms import *
 from flask_mysqldb import MySQL
 import yaml, json
-import csv, os
+import csv, os, io
 from flask_wtf import FlaskForm
+# from werkzeug import secure_filename
+import pandas
+
 
 app = Flask(__name__)
 
@@ -15,6 +18,9 @@ app.config['MYSQL_PASSWORD'] = db['mysql_password']
 app.config['MYSQL_DB'] = db['mysql_db']
 app.config['SECRET_KEY'] = os.urandom(24)
 mysql = MySQL(app)
+
+uploads_dir = os.path.join(app.instance_path, 'uploads')
+
 
 #All routing
 @app.route('/')
@@ -218,9 +224,6 @@ def configure():
     institution = cur.fetchall()
     rate = cur.execute("SELECT * FROM rateType")
     rate = cur.fetchall()
-    print("^^^^^^^^^^^^^^^")
-    print(supers)
-    print("^^^^^^^^^^^^^^^")
     return render_template("/configure.html",
     supers=supers,
     dept=dept,faculty=faculty,institution=institution,rate=rate,
@@ -236,8 +239,34 @@ def dataEditFunction():
 
 @app.route('/reports.html', methods=['GET', 'POST',  'PUT'])
 def reportFunction():
-    makeDatabase()
-    return render_template('reports.html')
+    cur = mysql.connection.cursor()
+    supers = cur.execute("SELECT * FROM supervisors")
+    supers = cur.fetchall()
+    dept = cur.execute("SELECT * FROM departments")
+    dept = cur.fetchall()
+    faculty = cur.execute("SELECT * FROM faculty")
+    faculty = cur.fetchall()
+    institution = cur.execute("SELECT * FROM institution")
+    institution = cur.fetchall()
+    rate = cur.execute("SELECT * FROM rateType")
+    rate = cur.fetchall()
+    return render_template("/reports.html",
+    supers=supers, dept=dept, faculty=faculty, institution=institution, rate=rate)
+
+
+# All report upload to database files
+@app.route("/uploadSuper", methods=["POST"])
+def uploadSuper():
+    file = request.files['uploadSuper']
+    answers = pandas.read_excel(file)
+    cur = mysql.connection.cursor()
+    cur.execute("DELETE FROM supervisors")
+    for item in answers['superName']:
+        cur.execute("INSERT INTO supervisors (superName) VALUES (%s)", ([item]))
+    mysql.connection.commit()
+    cur.close()
+    return redirect("/reports.html")
+
 
 
 @app.route('/logout.html')
