@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+
+
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <p><strong>Filter by...</strong></p>
+      <form method="GET" action="/time.html">
+        <div class="form-group">
+          <label for="exampleInputEmail1"><strong>User Name</strong></label>
+          <input type="userName" class="form-control" id="userName" name="userName" placeholder="John Doe">
+        </div>
+        <p>or</p>
+        <div class="form-group">
+          <!-- Date input -->
+          <label class="control-label" for="date"><strong>Date</strong></label>
+          <input class="form-control" id="date" name="date" placeholder="MM/DD/YYYY" type="text" />
+        </div>
+        <p>or</p>
+        <label for="validationCustom04"><strong>Machine</strong></label>
+        <select class="custom-select" id="machineNumber" name="machineNumber">
+          <option selected disabled value="">Choose...</option>
+          {% for machine in machines %}
+          <option value="{{machine[0]}}">{{machine[1]}}</option>
+          {% endfor %}
+        </select>
+        <br>
+        <br>
+        <button type="submit" class="btn btn-primary">Submit</button>
+
+      </form>
+      <p style="color:red"><strong>{{ errorMessage }}</strong></p>
+
+
+    </div>
+    <div class="col">
+      <canvas id="myChart" width="400" height="400"></canvas>
+      <script>
+      var ctx = document.getElementById('myChart').getContext('2d');
+      var myChart = new Chart(ctx, {
+          type: 'bar',
+          data: {
+              labels: ['{{ label1 }}', '{{ label2 }}', '{{ label3 }}', '{{ label4 }}', '{{ label5 }}', '{{ label6 }}', '{{ label7 }}'],
+              datasets: [{
+                  label: '{{ units }}',
+                  data: [{{ value1 }}, {{ value2 }}, {{ value3 }}, {{ value4 }}, {{ value5 }}, {{ value6 }}, {{ value7 }}],
+                  backgroundColor: [
+                      'rgba(255, 99, 132, 0.2)',
+                      'rgba(54, 162, 235, 0.2)',
+                      'rgba(255, 206, 86, 0.2)',
+                      'rgba(75, 192, 192, 0.2)',
+                      'rgba(153, 102, 255, 0.2)',
+                      'rgba(255, 159, 64, 0.2)',
+                      'rgba(225, 159, 128, 0.2)'
+                  ],
+                  borderColor: [
+                      'rgba(255, 99, 132, 1)',
+                      'rgba(54, 162, 235, 1)',
+                      'rgba(255, 206, 86, 1)',
+                      'rgba(75, 192, 192, 1)',
+                      'rgba(153, 102, 255, 1)',
+                      'rgba(255, 159, 64, 1)',
+                      'rgba(225, 159, 128, 1)'
+                  ],
+                  borderWidth: 1
+              }]
+          },
+          options: {
+              scales: {
+                  yAxes: [{
+                      ticks: {
+                          beginAtZero: true
+                      }
+                  }]
+              }
+          }
+      });
+      </script>
+
+    </div>
+  </div>
+</div>
+
+
+
+{% endblock %}

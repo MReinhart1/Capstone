@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container content-section">
+  <div class="col">
+
+
+
+    <form method="POST" action="">
+      {{ form.csrf_token }}
+      {{ form.userName.label(class="form-control-label") }}
+      {% if form.userName.errors %}
+      {{ form.userName(class="form-control form-control-lg is-invalid") }}
+      <div class="invalid-feedback">
+        {% for error in form.userName.errors %}
+        <span>{{ error }}</span>
+        {% endfor %}
+      </div>
+      {% else %}
+      {{ form.userName(class="form-control form-control-lg") }}
+      {% endif %}
+      <br>
+      <div class="form-group">
+        {{ form.submit(class="btn btn-outline-primary") }}
+      </div>
+
+    </form>
+    <a href="/home.html" <button type="button" class="btn btn-outline-danger">Cancel</button></a>
+  </div>
+
+</div>
+{% endblock %}
